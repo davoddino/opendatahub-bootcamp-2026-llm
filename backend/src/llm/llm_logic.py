@@ -27,7 +27,7 @@ Regole:
 - confronta gli ingredienti proposti con quelli corretti in modo semantico, non solo testuale
 - accetta ingredienti equivalenti o sufficientemente vicini, per esempio un ingrediente generico
   può andare bene se identifica chiaramente quello corretto
-- `ingredientsMap` deve contenere una voce per ogni ingrediente corretto della ricetta
+- `ingredientsMap` deve contenere una voce per ogni ingrediente corretto della ricetta. Deve contenere TUTTI gli ingredienti, non solo quelli indovinati o simili. Devono esserci TUTTI GLI INGREDIENTI DELLA RICETTA ORIGINALE. ESEMPIO NELLA RICETTA ORIGINALE CI SONO 10 INGREDIENTI E L'UTENTE NE PROPONE 2, NELLA RISPOSTA in ingredientsMap DEVONO ESSERCI 10 VOCI, DI CUI 2 CON `accepted: true` E `proposedIngredient` UGUALE A QUELLO CORRETTO, MENTRE LE ALTRE 8 CON `accepted: false` E `proposedIngredient` UGUALE A NULL O A QUALCOSA CHE NON VA BENE.
 - `correctIngredient` deve riportare esattamente il testo presente nella ricetta
 - `proposedIngredient` deve essere l'ingrediente dell'utente che meglio corrisponde, oppure `null`
 - `accepted` è `true` solo se la proposta è accettabile per quell'ingrediente, altrimenti `false`
