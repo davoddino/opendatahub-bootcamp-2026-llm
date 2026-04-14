@@ -62,7 +62,34 @@ Since LLMs have limited input length, retrieve only the fields you need using th
 
 Start easy — support only one language first (e.g., English), then expand.
 
-Think about what makes a good question: your game is only as fun as the data you feed into the LLM. Pick fields that contain interesting, distinguishable facts.
+Thinking about what makes a good question: your game is only as fun as the data you feed into the LLM. Pick fields that contain interesting, distinguishable facts.
+
+## Getting Started with Python & `uv`
+
+We recommend using [`uv`](https://github.com/astral-sh/uv) to manage your Python dependencies. It's incredibly fast and creates virtual environments automatically.
+
+### 1. Install `uv`
+If you don't have `uv` installed yet, you can install it via pip or curl (check the official instructions):
+```bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+
+### 2. Setup the environment
+In the root directory of this repository, we already prepared a `pyproject.toml` and a `uv.lock`.
+To create your virtual environment and install the required packages (`fastapi`, `together`, etc.), run:
+```bash
+uv sync
+```
+This will create a `.venv` directory. You can activate it with:
+```bash
+source .venv/bin/activate
+```
+
+### 3. Add more packages
+If you decide to add more libraries during the hackathon, simply use:
+```bash
+uv add <package-name>
+```
 
 ## Quickstart
 
