@@ -33,7 +33,10 @@ curl -X POST "http://localhost:8000/sendingredients" \
             "recipe": {
               "language": "it",
               "details": {
-                "title": "Crema di mozzarella e pomodoro"
+                "title": "Crema di mozzarella e pomodoro",
+                "ingredients": [
+                    "250 g di Ricotta Alto Adige"
+                ]
               }
             },
             "input": "credo ci sia la mozzarella",
