@@ -20,50 +20,5 @@
     }
   },
   "input": "mozzarella, pomodori freschi, sale, olio, basilico",
-  "output": {
-    "rating": 6,
-    "response": "Hai indovinato gli ingredienti principali! La crema di mozzarella e pomodoro è un antipasto o accompagnamento fresco e saporito. Manca però la ricotta che serve per dare la cremosità e i pomodori secchi per una spinta di sapore extra. L'olio che hai suggerito non serve perché si usa quello dei pomodori secchi sott'olio.",
-    "ingredientsMap": [
-      {
-        "correctIngredient": "125 g di Mozzarella Alto Adige",
-        "proposedIngredient": "mozzarella",
-        "accepted": true
-      },
-      {
-        "correctIngredient": "120 g di pomodori ciliegini",
-        "proposedIngredient": "pomodori freschi",
-        "accepted": true
-      },
-      {
-        "correctIngredient": "Sale e pepe",
-        "proposedIngredient": "sale",
-        "accepted": true
-      },
-      {
-        "correctIngredient": "Basilico fresco",
-        "proposedIngredient": "basilico",
-        "accepted": true
-      },
-      {
-        "correctIngredient": "250 g di Ricotta Alto Adige",
-        "proposedIngredient": null,
-        "accepted": false
-      },
-      {
-        "correctIngredient": "30 g di pomodori secchi sott’olio",
-        "proposedIngredient": "olio",
-        "accepted": false
-      },
-      {
-        "correctIngredient": "1 cucchiaino di concentrato di pomodoro",
-        "proposedIngredient": null,
-        "accepted": false
-      },
-      {
-        "correctIngredient": "1 pizzico di zucchero",
-        "proposedIngredient": null,
-        "accepted": false
-      }
-    ]
-  }
+  "output": null
 }
