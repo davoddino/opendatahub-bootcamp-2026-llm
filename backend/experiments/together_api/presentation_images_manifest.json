@@ -1,0 +1,38 @@
+[
+  {
+    "slide": 1,
+    "title": "Recipe Trivia from Open Data Hub",
+    "image": "presentation_slide_01.png",
+    "prompt": "A cheerful food trivia scene with a recipe photo card, magnifying glass, tomato, mozzarella, basil leaves, and floating question marks, showing the idea of guessing ingredients from a photo. playful presentation illustration, compact square composition, colorful, fun, clean, friendly shapes, modern flat-cartoon style, light background, high contrast, simple objects, no readable text, suitable for a tech project slide"
+  },
+  {
+    "slide": 2,
+    "title": "Starting from Open Data Hub data",
+    "image": "presentation_slide_02.png",
+    "prompt": "A clean visual about open data: recipe card, data nodes, JSON brackets, a small database icon, and an alpine food vibe, representing recipes coming from Open Data Hub. playful presentation illustration, compact square composition, colorful, fun, clean, friendly shapes, modern flat-cartoon style, light background, high contrast, simple objects, no readable text, suitable for a tech project slide"
+  },
+  {
+    "slide": 3,
+    "title": "How the workflow works",
+    "image": "presentation_slide_03.png",
+    "prompt": "A simple workflow pipeline: random recipe data, recipe image, user typing guessed ingredients, an AI assistant icon, and a JSON response card with arrows between each step. playful presentation illustration, compact square composition, colorful, fun, clean, friendly shapes, modern flat-cartoon style, light background, high contrast, simple objects, no readable text, suitable for a tech project slide"
+  },
+  {
+    "slide": 4,
+    "title": "How the LLM is used",
+    "image": "presentation_slide_04.png",
+    "prompt": "A friendly AI chef robot comparing an ingredient checklist, with green check marks and red crosses, showing how the LLM compares guessed ingredients with the correct recipe ingredients. playful presentation illustration, compact square composition, colorful, fun, clean, friendly shapes, modern flat-cartoon style, light background, high contrast, simple objects, no readable text, suitable for a tech project slide"
+  },
+  {
+    "slide": 5,
+    "title": "Trivia gameplay",
+    "image": "presentation_slide_05.png",
+    "prompt": "A fun quiz game interface with five recipe rounds, small food images, a score bar, and a final result badge, showing a player receiving feedback after each guess. playful presentation illustration, compact square composition, colorful, fun, clean, friendly shapes, modern flat-cartoon style, light background, high contrast, simple objects, no readable text, suitable for a tech project slide"
+  },
+  {
+    "slide": 6,
+    "title": "Future ideas",
+    "image": "presentation_slide_06.png",
+    "prompt": "A future-features concept scene with a trophy scoreboard on one side and a restaurant discount coupon on the other, with playful food and reward icons. playful presentation illustration, compact square composition, colorful, fun, clean, friendly shapes, modern flat-cartoon style, light background, high contrast, simple objects, no readable text, suitable for a tech project slide"
+  }
+]
