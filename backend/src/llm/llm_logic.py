@@ -4,6 +4,8 @@ llm_logic.py
 Logica applicativa per valutare gli ingredienti proposti dall'utente con Together AI.
 """
 
+from __future__ import annotations
+
 import json
 from pathlib import Path
 from typing import Any

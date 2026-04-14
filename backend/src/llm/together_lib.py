@@ -4,13 +4,17 @@ together_lib.py
 Libreria riutilizzabile per chiamate a Together AI.
 """
 
+from __future__ import annotations
+
 import json
 import os
+import ssl
 from pathlib import Path
 from typing import Any
+from urllib import request, error
 
+import certifi
 from dotenv import load_dotenv
-from together import Together
 
 
 DEFAULT_SYSTEM_PROMPT = """
@@ -52,22 +56,46 @@ class TogetherLib:
             raise RuntimeError(
                 "TOGETHER_API_KEY non trovata. Impostala nel file .env o come variabile d'ambiente."
             )
-        self.client = Together(api_key=api_key)
+        self.api_key = api_key
 
     def run(self, input_data: dict[str, Any]) -> dict[str, Any]:
         """Invia input_data al modello e restituisce un dict con il risultato."""
         user_message = self._build_user_message(input_data)
 
-        response = self.client.chat.completions.create(
-            model=self.model,
-            messages=[
+        payload = {
+            "model": self.model,
+            "messages": [
                 {"role": "system", "content": self.system_prompt},
                 {"role": "user", "content": user_message},
             ],
-            response_format={"type": "json_object"},
+            "response_format": {"type": "json_object"},
+        }
+
+        req = request.Request(
+            url="https://api.together.xyz/v1/chat/completions",
+            data=json.dumps(payload).encode("utf-8"),
+            headers={
+                "Authorization": f"Bearer {self.api_key}",
+                "Content-Type": "application/json",
+            },
+            method="POST",
         )
 
-        raw_content = response.choices[0].message.content
+        try:
+            ssl_context = ssl.create_default_context(cafile=certifi.where())
+            with request.urlopen(req, timeout=90, context=ssl_context) as response:
+                response_payload = json.loads(response.read().decode("utf-8"))
+        except error.HTTPError as exc:
+            error_body = exc.read().decode("utf-8", errors="ignore") if exc.fp else ""
+            raise RuntimeError(f"Together API HTTP error {exc.code}: {error_body}") from exc
+        except error.URLError as exc:
+            raise RuntimeError(f"Together API network error: {exc.reason}") from exc
+
+        try:
+            raw_content = response_payload["choices"][0]["message"]["content"]
+        except (KeyError, IndexError, TypeError) as exc:
+            raise ValueError(f"Unexpected Together response format: {response_payload}") from exc
+
         return self._parse_json(raw_content)
 
     def _build_user_message(self, input_data: dict[str, Any]) -> str:

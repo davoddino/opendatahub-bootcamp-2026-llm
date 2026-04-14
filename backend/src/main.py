@@ -3,6 +3,7 @@
 import os
 import sys
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 
 # Assicuriamoci che python riesca a caricare il modulo dal livello corretto. 
@@ -15,6 +16,14 @@ app = FastAPI(
     title="Open Data Hub API Backend",
     description="Backend per il Bootcamp sulle ricette e l'uso di LLM",
     version="1.0.0"
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 # Registra il router contenente tutte le nostre route (/sendnewrequest, /sendingredients)

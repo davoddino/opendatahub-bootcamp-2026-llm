@@ -1,1 +1,29 @@
-This is the directory for the backend
+This is the directory for the backend.
+
+## Setup
+
+From repository root:
+
+1. Install dependencies:
+
+	python -m pip install -r backend/requirements.txt
+
+	Optional (real Together LLM path):
+
+	python -m pip install -r backend/requirements-llm.txt
+
+2. Run server:
+
+	python backend/src/main.py
+
+The API runs on `http://127.0.0.1:8000`.
+
+## Endpoints
+
+- `GET /sendnewrequest?language=it`
+- `POST /sendingredients`
+
+## Notes
+
+- If `TOGETHER_API_KEY` is configured, the backend can use Together AI for evaluation.
+- If it is not configured, the backend uses a local fallback evaluator so development still works.

@@ -5,6 +5,19 @@ import mockQuestion from './mockQuestion.json';
 const TOTAL_ROUNDS = 5;
 const MAX_ROUND_SCORE = 100;
 const SAVED_RECIPES_KEY = 'recipe-guesser-saved-recipes';
+const API_BASE_URL = 'http://127.0.0.1:8000';
+
+const normalizeRoundScore = (rating) => {
+  if (!Number.isFinite(rating)) {
+    return 0;
+  }
+
+  if (rating <= 10) {
+    return Math.max(0, Math.min(100, rating * 10));
+  }
+
+  return Math.max(0, Math.min(100, rating));
+};
 
 function App() {
   const [questionData, setQuestionData] = useState(null);
@@ -43,11 +56,18 @@ function App() {
     setEvaluation(null);
     setGuess('');
 
-    await new Promise((resolve) => {
-      setTimeout(resolve, 300);
-    });
+    try {
+      const response = await fetch(`${API_BASE_URL}/sendnewrequest?language=it`);
+      if (!response.ok) {
+        throw new Error('Unable to load question from server.');
+      }
 
-    setQuestionData(mockQuestion.recipe);
+      const payload = await response.json();
+      setQuestionData(payload.recipe);
+    } catch {
+      setQuestionData(mockQuestion.recipe);
+    }
+
     setIsLoadingQuestion(false);
   };
 
@@ -65,14 +85,35 @@ function App() {
 
     setIsSubmitting(true);
 
-    await new Promise((resolve) => {
-      setTimeout(resolve, 300);
-    });
+    let roundEvaluation = mockQuestion.output;
 
-    const roundEvaluation = mockQuestion.output;
+    try {
+      const response = await fetch(`${API_BASE_URL}/sendingredients`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          recipe: questionData,
+          input: guess,
+          output: null,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Unable to submit ingredients to server.');
+      }
+
+      const payload = await response.json();
+      setQuestionData(payload.recipe || questionData);
+      roundEvaluation = payload.output || mockQuestion.output;
+    } catch {
+      roundEvaluation = mockQuestion.output;
+    }
+
     setEvaluation(roundEvaluation);
 
-    const updatedRatings = [...roundRatings, roundEvaluation.rating];
+    const updatedRatings = [...roundRatings, normalizeRoundScore(roundEvaluation.rating)];
     setRoundRatings(updatedRatings);
 
     if (updatedRatings.length === TOTAL_ROUNDS) {
