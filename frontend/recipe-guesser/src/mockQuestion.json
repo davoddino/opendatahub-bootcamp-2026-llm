@@ -63,6 +63,11 @@
         "correctIngredient": "1 pizzico di zucchero",
         "proposedIngredient": null,
         "accepted": false
+      },
+      {
+        "correctIngredient": null,
+        "proposedIngredient": "Fish sauce",
+        "accepted": false
       }
     ]
   }

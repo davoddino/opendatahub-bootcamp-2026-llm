@@ -85,14 +85,28 @@ function App() {
             </p>
             <p>{evaluation.response}</p>
 
-            <ul>
-              {evaluation.ingredientsMap.map((item, index) => (
-                <li key={`${item.correctIngredient}-${index}`}>
-                  {item.accepted ? '✅' : '❌'} {item.correctIngredient}
-                  {item.proposedIngredient ? ` → ${item.proposedIngredient}` : ' → no guess'}
-                </li>
-              ))}
-            </ul>
+            <table>
+              <thead>
+                <tr>
+                  <th>Your guess</th>
+                  <th>Correct ingredient</th>
+                </tr>
+              </thead>
+              <tbody>
+                {evaluation.ingredientsMap.map((item, index) => (
+                  <tr key={`${item.correctIngredient}-${index}`}>
+                    <td className={item.accepted ? 'accepted' : 'rejected'}>
+                      {item.proposedIngredient || ''}
+                    </td>
+                    <td>{item.correctIngredient}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+
+            <p>
+              <strong>Preparation:</strong> {questionData?.details?.preparation}
+            </p>
           </section>
         )}
       </main>
