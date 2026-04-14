@@ -4,6 +4,7 @@ import mockQuestion from './mockQuestion.json';
 
 const TOTAL_ROUNDS = 5;
 const MAX_ROUND_SCORE = 100;
+const SAVED_RECIPES_KEY = 'recipe-guesser-saved-recipes';
 
 function App() {
   const [questionData, setQuestionData] = useState(null);
@@ -14,11 +15,28 @@ function App() {
   const [currentRound, setCurrentRound] = useState(1);
   const [roundRatings, setRoundRatings] = useState([]);
   const [isGameFinished, setIsGameFinished] = useState(false);
+  const [currentPage, setCurrentPage] = useState('game');
+  const [savedRecipes, setSavedRecipes] = useState(() => {
+    const storedRecipes = localStorage.getItem(SAVED_RECIPES_KEY);
+    if (!storedRecipes) {
+      return [];
+    }
+
+    try {
+      return JSON.parse(storedRecipes);
+    } catch {
+      return [];
+    }
+  });
 
   const finalRating =
     roundRatings.length === TOTAL_ROUNDS
       ? roundRatings.reduce((sum, value) => sum + value, 0)
       : null;
+
+  const isCurrentRecipeSaved = Boolean(
+    questionData && savedRecipes.some((recipe) => recipe.id === questionData.id)
+  );
 
   const loadQuestion = async () => {
     setIsLoadingQuestion(true);
@@ -78,10 +96,66 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useEffect(() => {
+    localStorage.setItem(SAVED_RECIPES_KEY, JSON.stringify(savedRecipes));
+  }, [savedRecipes]);
+
+  const saveCurrentRecipe = () => {
+    if (!questionData || isCurrentRecipeSaved) {
+      return;
+    }
+
+    setSavedRecipes((previousRecipes) => [...previousRecipes, questionData]);
+  };
+
+  if (currentPage === 'saved') {
+    return (
+      <div className="app">
+        <main className="card">
+          <div className="header-row">
+            <h1>Saved Recipes</h1>
+            <button type="button" onClick={() => setCurrentPage('game')}>
+              Back to Game
+            </button>
+          </div>
+
+          {savedRecipes.length === 0 && <p>No saved recipes yet.</p>}
+
+          {savedRecipes.length > 0 && (
+            <div className="saved-list">
+              {savedRecipes.map((recipe) => (
+                <article key={recipe.id} className="saved-item">
+                  <img
+                    src={recipe.image_url}
+                    alt={recipe.details.title}
+                    className="saved-image"
+                  />
+                  <h3>{recipe.details.title}</h3>
+                  <h4>Ingredients</h4>
+                  <ul>
+                    {recipe.details.ingredients.map((ingredient, index) => (
+                      <li key={`${recipe.id}-ingredient-${index}`}>{ingredient}</li>
+                    ))}
+                  </ul>
+                  <p>{recipe.details.preparation}</p>
+                </article>
+              ))}
+            </div>
+          )}
+        </main>
+      </div>
+    );
+  }
+
   return (
     <div className="app">
       <main className="card">
-        <h1>Recipe Guesser</h1>
+        <div className="header-row">
+          <h1>Recipe Guesser</h1>
+          <button type="button" onClick={() => setCurrentPage('saved')}>
+            Saved Recipes ({savedRecipes.length})
+          </button>
+        </div>
         <p>
           <strong>Round:</strong> {Math.min(currentRound, TOTAL_ROUNDS)} / {TOTAL_ROUNDS}
         </p>
@@ -115,7 +189,12 @@ function App() {
 
         {evaluation && (
           <section className="evaluation">
-            <h2>Evaluation</h2>
+            <div className="header-row">
+              <h2>Evaluation</h2>
+              <button type="button" onClick={saveCurrentRecipe} disabled={isCurrentRecipeSaved}>
+                {isCurrentRecipeSaved ? 'Recipe Saved' : 'Save Recipe'}
+              </button>
+            </div>
             <p>
               <strong>Rating:</strong> {evaluation.rating}
             </p>

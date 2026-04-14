@@ -19,6 +19,17 @@
   gap: 16px;
 }
 
+.header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.header-row h1 {
+  margin: 0;
+}
+
 .question {
   display: flex;
   flex-direction: column;
@@ -90,4 +101,31 @@ button:disabled {
   display: flex;
   flex-direction: column;
   gap: 10px;
+}
+
+.saved-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.saved-item {
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 12px;
+}
+
+.saved-item h3 {
+  margin: 8px 0;
+}
+
+.saved-item p {
+  margin: 0;
+}
+
+.saved-image {
+  width: 100%;
+  max-height: 220px;
+  object-fit: cover;
+  border-radius: 8px;
 }
