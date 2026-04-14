@@ -1,0 +1,28 @@
+{
+  "recipe": {
+    "id": "string",
+    "image_url": "string",
+    "language": "string",
+    "details": {
+      "title": "string",
+      "description": "string",
+      "ingredients": [
+        "string"
+      ],
+      "preparation": "string"
+    }
+  },
+  "input": "string",
+  "output": {
+    "rating": "int",
+    "response": "string",
+    "ingredientsMap": [
+      {
+        "correctIngredient": "string",
+        "proposedIngredient": "string",
+        "accepted": "bool",
+        "absent": "bool"
+      }
+    ]
+  }
+}
