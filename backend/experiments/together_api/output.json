@@ -1,0 +1,19 @@
+{
+  "metadata": {
+    "timestamp": "2026-04-14T11:52:35.046878+00:00",
+    "status": "success",
+    "model": "meta-llama/Llama-3.3-70B-Instruct-Turbo"
+  },
+  "input": {
+    "question": "Qual è la capitale d'Italia e quanti abitanti ha circa?",
+    "language": "it"
+  },
+  "result": {
+    "answer": "La capitale d'Italia è Roma e ha circa 2,8 milioni di abitanti",
+    "explanation": "Roma è stata dichiarata capitale del Regno d'Italia nel 1871 e dal 1946 è la capitale della Repubblica Italiana. La popolazione di Roma è stata stimata intorno ai 2,8 milioni di abitanti all'interno del comune, mentre l'area metropolitana raggiunge i 4,3 milioni di abitanti.",
+    "confidence": 0.95,
+    "language": "it",
+    "sources_hint": "Istituto Nazionale di Statistica (ISTAT), Wikipedia"
+  },
+  "error": null
+}
