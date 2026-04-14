@@ -7,13 +7,13 @@ Uso:
     lib = TogetherLib(
         system_prompt="Sei un assistente...",
         output_schema={
-            "answer": "risposta alla domanda",
-            "confidence": "livello di confidenza da 0 a 1",
-            "language": "lingua della risposta (es. it, en)"
+            "rating": "intero da 0 a 10",
+            "response": "feedback per l'utente",
+            "ingredientsMap": []
         },
         model="meta-llama/Llama-3.3-70B-Instruct-Turbo",
     )
-    result: dict = lib.run({"question": "Qual è la capitale d'Italia?"})
+    result: dict = lib.run({...})
 """
 
 import os
@@ -35,10 +35,10 @@ senza testo aggiuntivo prima o dopo.
 Rispetta scrupolosamente lo schema JSON fornito nella richiesta utente.
 """.strip()
 
-DEFAULT_OUTPUT_SCHEMA: dict[str, str] = {
-    "answer": "risposta alla domanda",
-    "confidence": "livello di confidenza da 0.0 a 1.0",
-    "language": "codice lingua ISO 639-1 (es. 'it', 'en')",
+DEFAULT_OUTPUT_SCHEMA: dict[str, Any] = {
+    "rating": "intero da 0 a 10",
+    "response": "feedback per l'utente",
+    "ingredientsMap": [],
 }
 
 DEFAULT_MODEL = "meta-llama/Llama-3.3-70B-Instruct-Turbo"
@@ -59,7 +59,7 @@ class TogetherLib:
     def __init__(
         self,
         system_prompt: str = DEFAULT_SYSTEM_PROMPT,
-        output_schema: dict[str, str] = DEFAULT_OUTPUT_SCHEMA,
+        output_schema: dict[str, Any] = DEFAULT_OUTPUT_SCHEMA,
         model: str = DEFAULT_MODEL,
         env_path: Path | None = None,
     ) -> None:
@@ -123,11 +123,16 @@ class TogetherLib:
     def _parse_json(raw: str) -> dict[str, Any]:
         """Prova a decodificare il JSON restituito dal modello."""
         try:
-            return json.loads(raw)
+            parsed = json.loads(raw)
         except json.JSONDecodeError as exc:
             raise ValueError(
                 f"Il modello non ha restituito JSON valido.\nRisposta raw:\n{raw}"
             ) from exc
+        if not isinstance(parsed, dict):
+            raise ValueError(
+                f"Il modello non ha restituito un oggetto JSON valido.\nRisposta raw:\n{raw}"
+            )
+        return parsed
 
     @staticmethod
     def _load_env(env_path: Path | None) -> None:

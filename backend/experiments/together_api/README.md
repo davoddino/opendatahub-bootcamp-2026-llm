@@ -2,9 +2,9 @@
 
 Questa cartella contiene un piccolo esempio Python per chiamare Together AI:
 
-- `main.py` legge un file JSON di input
-- usa `TogetherLib` per fare la richiesta al modello
-- scrive la risposta in un file JSON di output
+- `main.py` legge un file JSON di input con `recipe`, `input` e `output`
+- usa `TogetherLib` per confrontare gli ingredienti corretti con quelli proposti dall'utente
+- scrive un file JSON finale con la stessa struttura dell'input, valorizzando `output`
 
 ## File principali
 
@@ -113,10 +113,28 @@ Esempio di `input.json`:
 
 ```json
 {
-  "question": "Qual è la capitale d'Italia e quanti abitanti ha circa?",
-  "language": "it"
+  "recipe": {
+    "id": "D92CEB87-C915-B4B1-9618-DD0C1EA4FA83",
+    "image_url": "http://service.suedtirol.info/imageresizer/ImageHandler.ashx?src=images/articles/rezeptartikel/a92c47a0-ace9-489f-aba2-17f137d62540.jpg",
+    "language": "it",
+    "details": {
+      "title": "Crema di mozzarella e pomodoro",
+      "description": "Crema di mozzarella e pomodoro",
+      "ingredients": [
+        "250 g di Ricotta Alto Adige",
+        "125 g di Mozzarella Alto Adige",
+        "120 g di pomodori ciliegini"
+      ],
+      "preparation": "..."
+    }
+  },
+  "input": "mozzarella, pomodori freschi, sale, olio, basilico",
+  "output": null
 }
 ```
+
+Il campo `input` contiene la risposta libera dell'utente.
+Il modello usa `recipe.details.ingredients` come ground truth e deve riempire `output`.
 
 ## Formato dell'output
 
@@ -124,23 +142,37 @@ Lo script salva un file `output.json` con questa struttura:
 
 ```json
 {
-  "metadata": {
-    "timestamp": "2026-04-14T10:00:00+00:00",
-    "status": "success",
-    "model": "meta-llama/Llama-3.3-70B-Instruct-Turbo"
-  },
-  "input": {
-    "question": "Qual è la capitale d'Italia e quanti abitanti ha circa?",
-    "language": "it"
-  },
-  "result": {
-    "answer": "...",
-    "explanation": "...",
-    "confidence": 0.95,
+  "recipe": {
+    "id": "D92CEB87-C915-B4B1-9618-DD0C1EA4FA83",
+    "image_url": "http://...",
     "language": "it",
-    "sources_hint": ""
+    "details": {
+      "title": "Crema di mozzarella e pomodoro",
+      "description": "Crema di mozzarella e pomodoro",
+      "ingredients": [
+        "250 g di Ricotta Alto Adige",
+        "125 g di Mozzarella Alto Adige"
+      ],
+      "preparation": "..."
+    }
   },
-  "error": null
+  "input": "mozzarella, pomodori freschi, sale, olio, basilico",
+  "output": {
+    "rating": 6,
+    "response": "Hai indovinato gli ingredienti principali...",
+    "ingredientsMap": [
+      {
+        "correctIngredient": "125 g di Mozzarella Alto Adige",
+        "proposedIngredient": "mozzarella",
+        "accepted": true
+      },
+      {
+        "correctIngredient": "250 g di Ricotta Alto Adige",
+        "proposedIngredient": null,
+        "accepted": false
+      }
+    ]
+  }
 }
 ```
 
