@@ -84,3 +84,10 @@ button:disabled {
   background: #fee2e2;
   color: #991b1b;
 }
+
+.final-rating {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}

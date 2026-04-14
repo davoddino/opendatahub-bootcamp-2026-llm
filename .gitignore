@@ -2,3 +2,4 @@
 data
 .venv
 **/*.pyc
+backend/experiments/together_api/.env.example
