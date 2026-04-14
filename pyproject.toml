@@ -1,0 +1,12 @@
+[project]
+name = "opendatahub-bootcamp-2026-llm"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi>=0.135.3",
+    "requests>=2.33.1",
+    "together>=2.8.0",
+    "uvicorn>=0.44.0",
+]
